@@ -19,7 +19,9 @@ ReactDOM.render(
     <Provider store={store}>
       <ThemeProvider theme={theme}> 
       <CssBaseline />
-      <Router > <App /> </Router> 
+      <Router >
+         <App /> 
+      </Router> 
        </ThemeProvider>
     </Provider>
   </React.StrictMode>,
