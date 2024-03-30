@@ -3,6 +3,7 @@ import { Box, Button, Container, Stack, Typography } from '@mui/material';
 import { Link, Route, Switch, useLocation } from 'react-router-dom';
 //*       Pages
 import  HomePage from './screens/homePage';
+
 import  ProductsPage from './screens/productsPage';
 import  OrderPage from './screens/ordersPage';
 import  UserPage from './screens/userPage';
@@ -14,6 +15,7 @@ import  HelpPage from './screens/helpPage';
 import '../css/app.css';
 import '../css/navbar.css'
 import '../css/footer.css'
+import Statistics from './screens/homePage/Statistics';
 
 
 
