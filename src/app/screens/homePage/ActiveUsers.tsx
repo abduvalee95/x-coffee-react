@@ -5,7 +5,9 @@ export default function ActiveUsers() {
     return (
         <div>
             <Container>
-            ActiveUsers
+                <Stack className={"users"}>
+                    
+                </Stack>
             </Container>
             </div>
     );
