@@ -15,7 +15,7 @@ const newDishes = [
     { productName:"Lavash", imagePath:"/img/lavash.webp" },
     { productName:"Cutlet", imagePath:"/img/cutlet.webp" },
     { productName:"Kebab", imagePath:"/img/kebab.webp" },
-    { productName:"Lolikab", imagePath:"/img/kebab-fresh.webp" },
+    { productName:"Lolikebab", imagePath:"/img/kebab-fresh.webp" },
 ];
 
 export default function NewDishes() {
@@ -44,9 +44,9 @@ export default function NewDishes() {
                                                 <Typography className="title">
                                                     {ele.productName}
                                                 </Typography>
-                                                <Divider width="3" height="10" bg="#d9d9d9" />
-                                                <Typography className={"price"}>12$</Typography>
                                             </Stack>
+                                                <Divider width="2" height="20" bg="#d9d9d9" />
+                                                <Typography className={"price"}>12$</Typography>
 
                                             <Stack>
                                                     <Typography className={"views"}>
