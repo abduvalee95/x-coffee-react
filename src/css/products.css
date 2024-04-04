@@ -145,6 +145,25 @@
   background-size: cover;
   border-radius: 0px 50px 0px 0px;
 }
+.products-page .products .product-img:before {
+  border-radius: 0px 50px 0px 0px;
+  content: "";
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 2;
+}
+
+.products-page .products .product-img:hover:before {
+  border-radius: 0px 50px 0px 0px;
+  opacity: 1;
+}
+
 .products-page .products .products-wrapper .product-card .product-sale {
   /* Rectangle 4398 */
   position: absolute;
@@ -173,23 +192,24 @@
   height: 46px;
   left: 95px;
   top: 216px;
-
   box-sizing: border-box;
   border: 1px solid rgb(227, 192, 141);
   border-radius: 10px;
-
+  cursor: pointer;
   background: rgba(187, 47, 200, 0.78);
 }
+
 .products-page .products .product-img .view-btn {
+  min-width: 40px;
   width: 40px;
   height: 40px;
-  background: rgba(0, 0, 0, 0.4);
-  color: #f8f8ff;
-  /* Ellipse 209 */
   position: absolute;
   top: 216px;
   left: 190px;
-  border-radius: 100px;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 50%;
+  z-index: 3;
+  cursor: pointer;
 }
 
 .products-page .no-data {
@@ -207,8 +227,8 @@
   color: #e3c08d;
 }
 
-.product-desc {
-  margin-top: 10px;
+.product-card .product-desc .product-desc {
+  margin-top: 2px;
   color: rgb(227, 192, 141);
   font-family: Poppins;
   font-size: 24px;
@@ -216,11 +236,20 @@
   line-height: 36px;
   letter-spacing: 0%;
   text-align: left;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
-
-.product-title {
-  width: 60px;
-  height: 30px;
+.product-card .product-desc .product-title {
+  margin-top: 10px;
+  color: rgb(52, 52, 52);
+  font-family: Poppins;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 30px;
+  letter-spacing: 0%;
+  text-align: left;
 }
 
 .pagination-section {
@@ -264,11 +293,9 @@
 .products-page .brands-logo .family-brands .family-card .card-box {
   width: 238px;
   height: 329px;
-
   display: flex;
   flex-direction: row;
   border-radius: 46px;
-
   box-shadow: inset 0px 4px 16px 0px rgba(242, 189, 87, 0.04),
     inset 0px 4px 4px 0px rgba(0, 0, 0, 0.25),
     inset 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
@@ -279,10 +306,12 @@
 }
 
 /** Address */
-.address {
+
+.products .address {
   margin-bottom: 100px;
 }
-.title {
+
+.products .address .title {
   margin-top: 20px;
   margin-left: 550px;
   color: rgb(52, 52, 52);
