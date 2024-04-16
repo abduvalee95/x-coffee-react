@@ -109,15 +109,15 @@ export default function HomeNavbar() {
               World's Most Delicious Cousine
             </Box>
             <Box className={"wel-txt"}>The Choice, not just a choice</Box>
-            <Box className={"service-txt"}>{count} hours service</Box>
+            <Box className={"service-txt"}>{/* {count} */} 24 hours service</Box>
             <Box className={"signup"}>
               {!authMember ? (
                 <Button
                   variant="contained"
                   className={"signup-button"}
-                  /*  onClick={() => setCount( count +1 )} */ onClick={
+                  /*  onClick={() => setCount( count +1 )} onClick={
                     buttonHandler
-                  }
+                  }*/ 
                 >
                   SIGN UP
                 </Button>
