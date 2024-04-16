@@ -16,6 +16,7 @@ import '../css/app.css';
 import '../css/navbar.css'
 import '../css/footer.css'
 import Statistics from './screens/homePage/Statistics';
+import Test from './screens/Test';
 
 
 
@@ -40,8 +41,9 @@ export function App() {
           <Route path="/help">
             <HelpPage />
           </Route>
-          <Route path="/">
-            <HomePage />
+        <Route path="/">
+          <Test />
+            {/* <HomePage /> */}
           </Route>
         </Switch>
         <Footer />
