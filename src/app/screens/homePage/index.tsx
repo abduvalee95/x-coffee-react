@@ -9,12 +9,14 @@ import Events from "./Events";
 import { useDispatch, useSelector } from "react-redux";
 import { Dispatch } from "@reduxjs/toolkit";
 import { createSelector } from "@reduxjs/toolkit";
-import { setNewDishes, setPopularDishes } from "./slice";
+import { setNewDishes, setPopularDishes, setTopUsers } from "./slice";
 import { retrieveNewDishes, retrievePopularDishes } from "./selector";
 import { Product } from "../../../lib/types/product";
 import { error, log } from "console";
 import ProductService from "../../services/ProductService";
 import { ProductCollection } from "../../../lib/enum/product.enum";
+import MemberService from "../../services/MemberService";
+import { Member } from "../../../lib/types/member";
 //!     Css
 import "../../../css/home.css";
 
@@ -23,11 +25,15 @@ import "../../../css/home.css";
 const actionDispatch = (dispatch: Dispatch) => ({
   setPopularDishes: (data: Product[]) => dispatch(setPopularDishes(data)),
   setNewDishes: (data: Product[]) => dispatch(setNewDishes(data)),
+  setTopUsers: (data: Member[]) => dispatch(setTopUsers(data)),
+
   //command yozvolyabvmiz                             bu reduser : yani comanndamizni reducer orqali ishga oshiryabmiz
 });
 export default function HomePage() {
   //3: Selector: Store => Data   storedan kerakli datani qabul qiladi
-  const { setPopularDishes, setNewDishes } = actionDispatch(useDispatch());
+  const { setPopularDishes, setNewDishes, setTopUsers } = actionDispatch(
+    useDispatch()
+  );
 
   useEffect(() => {
     //1: Backend server data request => Data , datalarni qabul qilamiz
@@ -57,6 +63,13 @@ export default function HomePage() {
         setNewDishes(data);
       })
       .catch((error) => console.log("Error, SetNewDishes", error));
+
+    const member = new MemberService();
+
+    member
+      .getTopUsers()
+      .then((data) => setTopUsers(data))
+      .catch((error) => console.log("Error topUser:", error));
   }, []);
 
   return (
