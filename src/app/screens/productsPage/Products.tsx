@@ -9,6 +9,13 @@ import PaginationItem from "@mui/material/PaginationItem";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
+import { useDispatch } from "react-redux";
+import { setProducts } from "./slice";
+import { Product } from "../../../lib/types/product";
+import { Dispatch, createSelector } from "@reduxjs/toolkit";
+import { create } from "domain";
+import { retrieveProducts } from "./selector";
+
 const products = [
   { productName: "Lavash", imagePath: "/img/lavash.webp" },
   { productName: "Cutlet", imagePath: "/img/cutlet.webp" },
@@ -20,7 +27,17 @@ const products = [
   { productName: "Lolikebab", imagePath: "/img/kebab-fresh.webp" },
 ];
 
-export default function Producds() {
+/*//*                  REDUX SLICE & SLECTOR */
+
+const actionDispatch = (dispatch: Dispatch) => ({
+  setProducts: (data: Product[]) => dispatch(setProducts(data)),
+});
+
+const productsRetrieve = createSelector(retrieveProducts, (Products) => ({
+  Products,
+}));
+
+export default function Products() {
   return (
     <div className="products">
       <Container>

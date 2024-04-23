@@ -1,4 +1,3 @@
-
 import { Member } from "./member";
 import { Product } from "./product";
 
@@ -8,12 +7,12 @@ import { Product } from "./product";
 
 export interface AppRootState {
   homePage: HomePageState;
-  // productPage: ProductPageState;
+  productPage: ProductPageState;
 }
 
-// biz bu erda sitezlayabmiz guruhlayabmiz guruhlarimizga, Analiz: tegishli bolgan mayda typelarni boshqa file larda mujasam qilyabmiz 
+// biz bu erda sitezlayabmiz guruhlayabmiz guruhlarimizga, Analiz: tegishli bolgan mayda typelarni boshqa file larda mujasam qilyabmiz
 
-// defination Qismi 
+// defination Qismi
 
 /*//*                        HOMEPAGE */
 
@@ -24,5 +23,10 @@ export interface HomePageState {
 }
 
 /*//*                        PRODUCTPAGE */
+export interface ProductPageState {
+  restaurant: Member | null;
+  chosenProduct: Product | null;
+  products: Product[];
+}
 
 /*//*                        ORDERSPAGE */

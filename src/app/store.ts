@@ -1,6 +1,7 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import HomePageReduser from "./screens/homePage/slice";
 import reduxLogger from "redux-logger"
+import ProductPageReduser from "./screens/productsPage/slice";
 
 
 export const store = configureStore({
@@ -13,6 +14,7 @@ export const store = configureStore({
   reducer: {
     // homepageni ichidagi Slice bn Reduser Storega boglandi
     homePage: HomePageReduser,
+    productsPage:ProductPageReduser
   },
 });
 
