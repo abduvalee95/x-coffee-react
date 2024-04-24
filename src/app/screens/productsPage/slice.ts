@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { ProductPageState } from "../../../lib/types/screen";
+import { ProductsPageState } from "../../../lib/types/screen";
 
-const initialState: ProductPageState = {
+const initialState: ProductsPageState = {
   restaurant: null,
   chosenProduct: null,
   products: [],
@@ -26,5 +26,5 @@ const productsPageSlice = createSlice({
 export const { setRestaurant, setChosenProduct, setProducts } =
   productsPageSlice.actions;
 
-const ProductPageReduser = productsPageSlice.reducer;
-export default ProductPageReduser
+const ProductsPageReduser = productsPageSlice.reducer;
+export default ProductsPageReduser

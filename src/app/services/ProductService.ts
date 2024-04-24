@@ -24,7 +24,6 @@ class ProductService {
       console.log("Error, getProduct qismida shu Xatolik:", error);
       throw error;
     }
-    return [];
   }
 }
 

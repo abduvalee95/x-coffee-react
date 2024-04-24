@@ -1,5 +1,3 @@
-import { Container } from "@mui/material";
-import { log } from "console";
 import { Link, Route, Switch, useRouteMatch } from "react-router-dom";
 import ChosenProduct from "./ChosenProduct";
 import Products from "./Products";

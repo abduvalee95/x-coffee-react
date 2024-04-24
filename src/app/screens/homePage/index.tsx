@@ -8,7 +8,7 @@ import Events from "./Events";
 //!    redux imports
 import { useDispatch, useSelector } from "react-redux";
 import { Dispatch } from "@reduxjs/toolkit";
-import { createSelector } from "@reduxjs/toolkit";
+import { createSelector } from "reselect";
 import { setNewDishes, setPopularDishes, setTopUsers } from "./slice";
 import { retrieveNewDishes, retrievePopularDishes } from "./selector";
 import { Product } from "../../../lib/types/product";
@@ -44,7 +44,7 @@ export default function HomePage() {
       .getProducts({
         page: 1,
         limit: 4,
-        order: "productView",
+        order: "productViews",
         productCollection: ProductCollection.DISH,
       })
       .then((data) => {

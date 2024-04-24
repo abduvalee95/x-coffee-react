@@ -7,7 +7,7 @@ import { Product } from "./product";
 
 export interface AppRootState {
   homePage: HomePageState;
-  productPage: ProductPageState;
+  productsPage: ProductsPageState;
 }
 
 // biz bu erda sitezlayabmiz guruhlayabmiz guruhlarimizga, Analiz: tegishli bolgan mayda typelarni boshqa file larda mujasam qilyabmiz
@@ -23,7 +23,7 @@ export interface HomePageState {
 }
 
 /*//*                        PRODUCTPAGE */
-export interface ProductPageState {
+export interface ProductsPageState {
   restaurant: Member | null;
   chosenProduct: Product | null;
   products: Product[];
