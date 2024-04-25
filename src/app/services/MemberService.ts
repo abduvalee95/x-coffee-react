@@ -22,6 +22,21 @@ class MemberService {
       throw error;
     }
   }
+  public async getRestaurant(): Promise<Member> {
+    try {
+      const url = this.path + "/member/restaurant";
+      const result = await axios.get(url);
+      console.log("result getRestaurant", result);
+      
+      const restaurant:Member =result.data
+        return result.data;
+    } catch (error) {
+      console.log("Error, getTopUser qismida shu Xatolik:", error);
+      throw error;
+    }
+  }
+
+  
 }
 
 export default MemberService;

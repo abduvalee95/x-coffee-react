@@ -221,7 +221,7 @@ export default function Products() {
             <Stack className="products-wrapper">
               {products.length !== 0 ? (
                 products.map((product: Product) => {
-                  const imagePath = `${serverApi}${product.productImages[0]}`;
+                  const imagePath = `${serverApi}/${product.productImages[0]}`;
                   const productSizeVolume =
                     product.productCollection === ProductCollection.DRINK
                       ? product.productVolume + " L"
