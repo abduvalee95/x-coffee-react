@@ -8,7 +8,7 @@ interface ProductPageProps {
   onAdd: (items: CartItem) => void;
 }
 export default function ProductsPage(props: ProductPageProps) {
-  const { onAdd } = props;// togridan togri ishlatmizmiz childga pass qilamiz
+  const { onAdd } = props; // togridan togri ishlatmizmiz childga pass qilamiz
   const products = useRouteMatch();
   console.log(products);
 

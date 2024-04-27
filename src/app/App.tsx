@@ -15,11 +15,13 @@ import HelpPage from "./screens/helpPage";
 import "../css/app.css";
 import "../css/navbar.css";
 import "../css/footer.css";
-import { CartItem } from "../lib/types/search";
+import useBasket from "./hooks/useBasket";
 
 export function App() {
   const location = useLocation();
+  const { cartItems, onAdd, onRemove, onDelete, onDeleteAll } = useBasket();
 
+  /* 
   const cartJson: string | null = localStorage.getItem("cartData");
   const currentCart = cartJson ? JSON.parse(cartJson) : [];
 
@@ -48,10 +50,26 @@ export function App() {
       localStorage.setItem("cartData", JSON.stringify(cartUpdate));
     }
   };
-
+ */
   return (
     <>
-      {location.pathname === "/" ? <HomeNavbar cartItems={ cartItems} /> : <OtherNavbar cartItems={ cartItems} />}
+      {location.pathname === "/" ? (
+        <HomeNavbar
+          cartItems={cartItems}
+          onAdd={onAdd}
+          onRemove={onRemove}
+          onDelete={onDelete}
+          onDeleteAll={onDeleteAll}
+        />
+      ) : (
+        <OtherNavbar
+          cartItems={cartItems}
+          onAdd={onAdd}
+          onRemove={onRemove}
+          onDelete={onDelete}
+          onDeleteAll={onDeleteAll}
+        />
+      )}
       <Switch>
         <Route path="/products">
           <ProductsPage onAdd={onAdd} />
