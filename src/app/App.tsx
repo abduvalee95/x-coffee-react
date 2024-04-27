@@ -51,7 +51,7 @@ export function App() {
 
   return (
     <>
-      {location.pathname === "/" ? <HomeNavbar /> : <OtherNavbar cartItems={ cartItems} />}
+      {location.pathname === "/" ? <HomeNavbar cartItems={ cartItems} /> : <OtherNavbar cartItems={ cartItems} />}
       <Switch>
         <Route path="/products">
           <ProductsPage onAdd={onAdd} />
