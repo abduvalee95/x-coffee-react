@@ -20,6 +20,7 @@ import { ProductCollection } from "../../../lib/enum/product.enum";
 import { serverApi } from "../../../lib/config";
 import { log } from "console";
 import { useHistory } from "react-router-dom";
+import { CartItem } from "../../../lib/types/search";
 
 /*//*                  REDUX SLICE & SLECTOR */
 
@@ -31,7 +32,12 @@ const productsRetriever = createSelector(retrieveProducts, (products) => ({
   products,
 }));
 
-export default function Products() {
+interface ProductProps {
+  onAdd: (items: CartItem) => void;
+}
+
+export default function Products(props: ProductProps) {
+  const { onAdd } = props;
   const { setProducts } = actionDispatch(useDispatch());
   const { products } = useSelector(productsRetriever); //products obj[] qabul qilamiz
   const [productSearch, setProductSearch] = useState<ProductInquiry>({
@@ -240,7 +246,20 @@ export default function Products() {
                           {" "}
                           {productSizeVolume}
                         </div>
-                        <Button className={"shop-btn"}>
+                        <Button
+                          className={"shop-btn"}
+                          onClick={(e) => {
+                                //onClick eventi bosilganda nima xodisa bolishini yozib olamiz onAdd call qismini chaqiramiz argumentlarimizni yozvolamiz 
+                                onAdd({
+                                  _id: product._id,
+                                  quantity: 1,
+                                  name: product.productName,
+                                  price: product.productPrice,
+                                  image: product.productImages[0],
+                                });
+                            e.stopPropagation();
+                          }}
+                        >
                           <img
                             src={"/icons/shopping-cart.svg"}
                             style={{ display: "flex" }}
@@ -256,6 +275,11 @@ export default function Products() {
                               sx={{
                                 color:
                                   product.productViews === 0 ? "gray" : "white",
+                              }}
+                              onClick={(e) => {
+                            console.log("Button Bosildi::::");
+                            
+                                e.stopPropagation();
                               }}
                             />
                           </Badge>

@@ -3,8 +3,14 @@ import { NavLink } from "react-router-dom";
 import Basket from "./Basket";
 import React, { useState, useEffect } from "react";
 import { log } from "console";
+import { CartItem } from "../../../lib/types/search";
 
-export default function HomeNavbar() {
+interface HomeNavbarProps {
+  cartItems: CartItem[];
+}
+
+export default function HomeNavbar(props: HomeNavbarProps) {
+  const { cartItems } = props;
   const authMember = null;
 
   const [count, setCount] = useState<number>(0),
@@ -12,13 +18,12 @@ export default function HomeNavbar() {
 
   useEffect(() => {
     console.log("commponentDidmount"); // data Fetch qilamiz
-      setCount(count + 1);
-      
-      // return orqalik component willUnmount ni iwlatishimiz mm
-      return () => {
-          console.log("componentWillUnMount");
-          
-      }
+    setCount(count + 1);
+
+    // return orqalik component willUnmount ni iwlatishimiz mm
+    return () => {
+      console.log("componentWillUnMount");
+    };
   }, [value]); // bunda calback function hamda arraydependency bor "nimani qymati ozgarganda ishga tushsin "
   //valueni qiymati ozgarganligi sababli useEffect yana ishga tuwub beradi
   // doim birmarta ishga tushadi  arraydependencyga malum bir valueni qymatni kiritsak  aynan valueni qiymati opzgargan vaqtda ishga tuwiw  mexanizmni qurib beradi;
@@ -86,7 +91,7 @@ export default function HomeNavbar() {
                 Help
               </NavLink>
             </Box>
-            <Basket />
+            <Basket cartItems={cartItems} />
             {!authMember ? (
               <Box>
                 <Button variant="contained" className="login-button">
@@ -109,7 +114,9 @@ export default function HomeNavbar() {
               World's Most Delicious Cousine
             </Box>
             <Box className={"wel-txt"}>The Choice, not just a choice</Box>
-            <Box className={"service-txt"}>{/* {count} */} 24 hours service</Box>
+            <Box className={"service-txt"}>
+              {/* {count} */} 24 hours service
+            </Box>
             <Box className={"signup"}>
               {!authMember ? (
                 <Button
@@ -117,7 +124,7 @@ export default function HomeNavbar() {
                   className={"signup-button"}
                   /*  onClick={() => setCount( count +1 )} onClick={
                     buttonHandler
-                  }*/ 
+                  }*/
                 >
                   SIGN UP
                 </Button>
