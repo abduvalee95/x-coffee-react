@@ -1,6 +1,6 @@
 import axios from "axios";
 import { serverApi } from "../../lib/config";
-import { Member, MemberInput } from "../../lib/types/member";
+import { LoginInput, Member, MemberInput } from "../../lib/types/member";
 import { log } from "console";
 
 class MemberService {
@@ -41,17 +41,35 @@ class MemberService {
       const url = this.path + "/member/signup";
       const result = await axios.post(url, input, { withCredentials: true });
       console.log(result);
-      
-      const member: Member = result.data.member
-      console.log(member);
-      localStorage.setItem("memberData:",JSON.stringify(member))
 
-      return member
+      const member: Member = result.data.member;
+      console.log(member);
+      localStorage.setItem("memberData:", JSON.stringify(member));
+
+      return member;
     } catch (error) {
-      console.log("Error, signup qismida shu Xatolik:", error);
+      console.log("Error, Signup qismida shu Xatolik:", error);
       throw error;
     }
   }
+
+  public async login(input: LoginInput): Promise<Member> {
+    try {
+      const url = this.path + "/member/login";
+      const result = await axios.post(url, input, { withCredentials: true });
+      console.log(result);
+
+      const member: Member = result.data.member;
+      console.log(member);
+      localStorage.setItem("memberData:", JSON.stringify(member));
+
+      return member;
+    } catch (error) {
+      console.log("Error, Login qismida shu Xatolik:", error);
+      throw error;
+    }
+  }
+
 }
 
 export default MemberService;
