@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { findDOMNode } from "react-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
@@ -6,6 +7,12 @@ import Fade from "@material-ui/core/Fade";
 import { Fab, Stack, TextField } from "@mui/material";
 import styled from "styled-components";
 import LoginIcon from "@mui/icons-material/Login";
+import { T } from "../../../lib/types/common";
+import { Message } from "@mui/icons-material";
+import { Messages } from "../../../lib/config";
+import { MemberInput } from "../../../lib/types/member";
+import MemberService from "../../services/MemberService";
+import { sweetErrorHandling } from "../../../lib/sweetAlert";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -41,7 +48,53 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
   const { signupOpen, loginOpen, handleSignupClose, handleLoginClose } = props;
   const classes = useStyles();
 
-  /** HANDLERS **/
+  // member inputlarga qarab state hooklarni hosil qilamiz init qismi
+
+  const [memberNick, setMemberNick] = useState<string>("");
+  const [memberPhone, setMemberPhone] = useState<string>("");
+  const [memberPassword, setMemberPassword] = useState<string>("");
+
+  //** HANDLERS **/
+  const handleUsername = (e: T) => {
+    setMemberNick(e.target.value);
+  };
+
+  const handlePhone = (e: T) => {
+    setMemberPhone(e.target.value);
+  };
+
+  const handlePassword = (e: T) => {
+    setMemberPassword(e.target.value);
+  };
+
+  const handlePasswordKeyDown = (e: T) => {
+    if (e.key === "Enter" && signupOpen) {
+      handleSignupRequest().then();
+    }
+  };
+
+  const handleSignupRequest = async () => {
+    try {
+      const isFulfill =
+        memberNick !== "" && memberPassword !== "" && memberPhone !== "";
+      if (!isFulfill) throw new Error(Messages.error3);
+
+      const singupInput: MemberInput = {
+        memberNick: memberNick,
+        memberPassword: memberPassword,
+        memberPhone: memberPhone,
+      };
+
+      //Beckandga yuboramiz
+      const member = new MemberService();
+      const result = await member.signup(singupInput);
+      handleSignupClose();
+    } catch (error) {
+      console.log(error);
+      handleSignupClose();
+      sweetErrorHandling(error).then();
+    }
+  };
 
   return (
     <div>
@@ -71,22 +124,27 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
                 id="outlined-basic"
                 label="username"
                 variant="outlined"
+                onChange={handleUsername}
               />
               <TextField
                 sx={{ my: "17px" }}
                 id="outlined-basic"
                 label="phone number"
                 variant="outlined"
+                onChange={handlePhone}
               />
               <TextField
                 id="outlined-basic"
                 label="password"
                 variant="outlined"
+                onChange={handlePassword}
+                onKeyDown={handlePasswordKeyDown}
               />
               <Fab
                 sx={{ marginTop: "30px", width: "120px" }}
                 variant="extended"
                 color="primary"
+                onClick={handleSignupRequest}
               >
                 <LoginIcon sx={{ mr: 1 }} />
                 Signup
