@@ -13,6 +13,7 @@ import { Messages } from "../../../lib/config";
 import { LoginInput, MemberInput } from "../../../lib/types/member";
 import MemberService from "../../services/MemberService";
 import { sweetErrorHandling } from "../../../lib/sweetAlert";
+import { useGlobals } from "../../hooks/useGlobals";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -47,12 +48,11 @@ interface AuthenticationModalProps {
 export default function AuthenticationModal(props: AuthenticationModalProps) {
   const { signupOpen, loginOpen, handleSignupClose, handleLoginClose } = props;
   const classes = useStyles();
-
   // member inputlarga qarab state hooklarni hosil qilamiz init qismi
-
   const [memberNick, setMemberNick] = useState<string>("");
   const [memberPhone, setMemberPhone] = useState<string>("");
   const [memberPassword, setMemberPassword] = useState<string>("");
+  const { setAuthMember } = useGlobals();
 
   //** HANDLERS **/
   const handleUsername = (e: T) => {
@@ -71,7 +71,7 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
     if (e.key === "Enter" && signupOpen) {
       handleSignupRequest().then();
     } else if (e.key === "Enter" && loginOpen) {
-      handleLoginRequest().then()
+      handleLoginRequest().then();
     }
   };
 
@@ -90,9 +90,9 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
       //*Beckandga yuboramiz
       const member = new MemberService();
       const result = await member.signup(singupInput);
-      
-      //Saving Authentication user
 
+      //Saving Authentication user
+      setAuthMember(result);
       handleSignupClose();
     } catch (error) {
       console.log(error);
@@ -103,8 +103,7 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
 
   const handleLoginRequest = async () => {
     try {
-      const isFulfill =
-        memberNick !== "" && memberPassword !== "";
+      const isFulfill = memberNick !== "" && memberPassword !== "";
       if (!isFulfill) throw new Error(Messages.error3);
 
       const loginInput: LoginInput = {
@@ -114,13 +113,14 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
 
       //*Beckandga yuboramiz
       const member = new MemberService();
-      const result = await member.login(loginInput)
+      const result = await member.login(loginInput);
 
       //Saving Authentication user
-      handleLoginClose()
+      setAuthMember(result);
+      handleLoginClose();
     } catch (error) {
       console.log(error);
-      handleLoginClose()
+      handleLoginClose();
       sweetErrorHandling(error).then();
     }
   };

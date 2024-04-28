@@ -18,7 +18,7 @@ export interface Member {
   memberStatus: MemberStatus;
   memberNick: string;
   memberPhone: string;
-  memberPassword?: string; //yashirdik
+  memberPassword?: string;
   memberAddre?: string;
   memberDesc?: string;
   memberImage?: string;

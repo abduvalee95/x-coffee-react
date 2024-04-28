@@ -56,12 +56,12 @@ class MemberService {
   public async login(input: LoginInput): Promise<Member> {
     try {
       const url = this.path + "/member/login";
-      const result = await axios.post(url, input, { withCredentials: true });
-      console.log(result);
+      const result = await axios.post(url, input, { withCredentials: true }); //true bn backand frontendga cookie ni joylydi  true bolganda gina backend fronendnimalumotlarni ozgartira oladi oldi berdi
+      console.log("Login:", result);
 
       const member: Member = result.data.member;
       console.log(member);
-      localStorage.setItem("memberData:", JSON.stringify(member));
+      localStorage.setItem("memberData", JSON.stringify(member));
 
       return member;
     } catch (error) {
@@ -70,6 +70,19 @@ class MemberService {
     }
   }
 
+  //boolean qilsaham boladi Void qilsaham boladi
+  public async logout(): Promise<void> {
+    try {
+      const url = this.path + "/member/logout";
+      const result = await axios.post(url, {}, { withCredentials: true }); //true bn backand frontendga cookie ni joylydi  true bolganda gina backend fronendnimalumotlarni ozgartira oladi oldi berdi
+      console.log("logout:", result);
+
+      localStorage.removeItem("memberData");
+    } catch (error) {
+      console.log("Error, logout qismida shu Xatolik:", error);
+      throw error;
+    }
+  }
 }
 
 export default MemberService;

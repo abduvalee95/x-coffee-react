@@ -1,9 +1,20 @@
-import { Box, Button, Container, Stack } from "@mui/material";
+import React, { useState, useEffect } from "react";
+import {
+  Box,
+  Button,
+  Container,
+  ListItemIcon,
+  Menu,
+  MenuItem,
+  Stack,
+} from "@mui/material";
 import { NavLink } from "react-router-dom";
 import Basket from "./Basket";
-import React, { useState, useEffect } from "react";
 import { log } from "console";
 import { CartItem } from "../../../lib/types/search";
+import { useGlobals } from "../../hooks/useGlobals";
+import { serverApi } from "../../../lib/config";
+import { Logout } from "@mui/icons-material";
 
 interface HomeNavbarProps {
   cartItems: CartItem[];
@@ -13,43 +24,28 @@ interface HomeNavbarProps {
   onDeleteAll: () => void;
   setSignupOpen: (isOpen: boolean) => void;
   setLoginOpen: (isOpen: boolean) => void;
+  handleLogoutClick: (e: React.MouseEvent<HTMLElement>) => void;
+  anchorEl: HTMLElement | null;
+  handleCloseLogout: () => void;
+  handleLogoutRequest: () => void;
 }
 
 export default function HomeNavbar(props: HomeNavbarProps) {
-  const { cartItems, onAdd, onDelete, onDeleteAll, onRemove,setSignupOpen,setLoginOpen } = props;
-  const authMember = null;
+  const {
+    cartItems,
+    onAdd,
+    onDelete,
+    onDeleteAll,
+    onRemove,
+    setSignupOpen,
+    setLoginOpen,
+    handleCloseLogout,
+    anchorEl,
+    handleLogoutClick,
+    handleLogoutRequest,
+  } = props;
 
-  const [count, setCount] = useState<number>(0),
-    [value, setValue] = useState<boolean>(true); // button bosilganda qiymati ozgaryabti True bolsa false false bolsa true ga ozgaryabti
-
-  useEffect(() => {
-    console.log("commponentDidmount"); // data Fetch qilamiz
-    setCount(count + 1);
-
-    // return orqalik component willUnmount ni iwlatishimiz mm
-    return () => {
-      console.log("componentWillUnMount");
-    };
-  }, [value]); // bunda calback function hamda arraydependency bor "nimani qymati ozgarganda ishga tushsin "
-  //valueni qiymati ozgarganligi sababli useEffect yana ishga tuwub beradi
-  // doim birmarta ishga tushadi  arraydependencyga malum bir valueni qymatni kiritsak  aynan valueni qiymati opzgargan vaqtda ishga tuwiw  mexanizmni qurib beradi;
-  // Valueni qiymati ozgarganda componentimiz yana ishga tushadi
-  const buttonHandler = () => {
-    setValue(!value);
-  };
-
-  /* Hendlers  */
-  // count nomli qiymatni hozil qilib ber boshlangich qiymati (0) bolsin
-  //   const [count, setCount] = useState<number>(0);
-  // setcount dan foydalanamiz button bosilganda qiymatmiz ozgarish kk
-
-  // 2chi variant
-
-  /*  
- const buttonHandler = () => {
-    setCount(count + 2);
-}; 
-*/
+  const { authMember } = useGlobals();
 
   return (
     <div className="home-navbar">
@@ -106,20 +102,69 @@ export default function HomeNavbar(props: HomeNavbarProps) {
             />
             {!authMember ? (
               <Box>
-                <Button variant="contained" className="login-button"
-                 onClick={()=>setLoginOpen(true)}
-                 >
-                  {" "}
-                  Login{" "}
+                <Button
+                  variant="contained"
+                  className="login-button"
+                  onClick={() => setLoginOpen(true)}
+                >
+                  Login
                 </Button>
               </Box>
             ) : (
               <img
                 className="user-avatar"
-                src={"/icons/default-user.svg"}
+                src={
+                  authMember?.memberImage
+                    ? `${serverApi}/${authMember?.memberImage}`
+                    : "/icons/default-user.svg"
+                }
                 aria-haspopup={"true"}
+                onClick={handleLogoutClick}
               />
             )}
+
+            <Menu
+              anchorEl={anchorEl}
+              id="account-menu"
+              open={Boolean(anchorEl)}
+              onClose={handleCloseLogout}
+              onClick={handleCloseLogout}
+              PaperProps={{
+                elevation: 0,
+                sx: {
+                  overflow: "visible",
+                  filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+                  mt: 1.5,
+                  "& .MuiAvatar-root": {
+                    width: 32,
+                    height: 32,
+                    ml: -0.5,
+                    mr: 1,
+                  },
+                  "&:before": {
+                    content: '""',
+                    display: "block",
+                    position: "absolute",
+                    top: 0,
+                    right: 14,
+                    width: 10,
+                    height: 10,
+                    bgcolor: "background.paper",
+                    transform: "translateY(-50%) rotate(45deg)",
+                    zIndex: 0,
+                  },
+                },
+              }}
+              transformOrigin={{ horizontal: "right", vertical: "top" }}
+              anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+            >
+              <MenuItem onClick={handleLogoutRequest}>
+                <ListItemIcon>
+                  <Logout fontSize="small" style={{ color: "blue" }} />
+                </ListItemIcon>
+                Logout
+              </MenuItem>
+            </Menu>
           </Stack>
         </Stack>
         <Stack className={"header-frame"}>
@@ -128,14 +173,13 @@ export default function HomeNavbar(props: HomeNavbarProps) {
               World's Most Delicious Cousine
             </Box>
             <Box className={"wel-txt"}>The Choice, not just a choice</Box>
-            <Box className={"service-txt"}> 24 hours service
-            </Box>
+            <Box className={"service-txt"}> 24 hours service</Box>
             <Box className={"signup"}>
               {!authMember ? (
                 <Button
                   variant="contained"
                   className={"signup-button"}
-                 onClick={()=>setSignupOpen(true)}
+                  onClick={() => setSignupOpen(true)}
                 >
                   SIGN UP
                 </Button>
