@@ -192,12 +192,18 @@
   height: 46px;
   left: 95px;
   top: 216px;
+  opacity: 0;
+  transition: ease-in-out opacity 1s;
   box-sizing: border-box;
   border: 1px solid rgb(227, 192, 141);
   border-radius: 10px;
   background: rgba(187, 47, 200, 0.78);
   cursor: pointer;
   z-index: 3;
+}
+
+.products-page .products .product-img:hover .shop-btn {
+  opacity: 1;
 }
 
 .products-page .products .product-img .view-btn {
@@ -211,6 +217,11 @@
   border-radius: 50%;
   z-index: 3;
   cursor: pointer;
+  opacity: 0;
+  transition: cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+.products-page .products .product-img:hover .view-btn {
+  opacity: 1;
 }
 
 .products-page .no-data {

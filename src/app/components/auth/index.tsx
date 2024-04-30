@@ -163,6 +163,7 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
                 onChange={handlePhone}
               />
               <TextField
+                type="password"
                 id="outlined-basic"
                 label="password"
                 variant="outlined"
