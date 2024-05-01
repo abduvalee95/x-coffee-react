@@ -8,7 +8,10 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import DeleteForeverTwoToneIcon from "@mui/icons-material/DeleteForeverTwoTone";
 import { useHistory } from "react-router-dom";
 import { CartItem } from "../../../lib/types/search";
-import { serverApi } from "../../../lib/config";
+import { Messages, serverApi } from "../../../lib/config";
+import { sweetErrorHandling } from "../../../lib/sweetAlert";
+import { useGlobals } from "../../hooks/useGlobals";
+import OrderService from "../../services/OrderService";
 
 interface BasketProps {
   cartItems: CartItem[];
@@ -20,7 +23,7 @@ interface BasketProps {
 
 export default function Basket(props: BasketProps) {
   const { cartItems, onAdd, onDelete, onDeleteAll, onRemove } = props;
-  const authMember = null;
+  const { authMember } = useGlobals();
   const history = useHistory();
   const itemsPrice = cartItems.reduce(
     (a: number, c: CartItem) => a + c.quantity * c.price,
@@ -32,12 +35,31 @@ export default function Basket(props: BasketProps) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
-  /** HANDLERS **/
+  //** H                      ANDLERS **/
+
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(e.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const proceedOrderHandler = async () => {
+    try {
+      handleClose();
+      if (!authMember) throw new Error(Messages.error2);
+
+      const order = new OrderService();
+      await order.createOrder(cartItems)
+      
+      onDeleteAll();
+//? REFREsh Context
+      history.push("/orders")
+
+    } catch (error) {
+      console.log(error);
+      sweetErrorHandling(error).then();
+    }
   };
 
   return (
@@ -146,7 +168,7 @@ export default function Basket(props: BasketProps) {
               <span className={"price"}>
                 Total: ${totalPrice} ({itemsPrice}+{shipingCost})
               </span>
-              <Button startIcon={<ShoppingCartIcon />} variant={"contained"}>
+              <Button onClick={proceedOrderHandler} startIcon={<ShoppingCartIcon />} variant={"contained"}>
                 Order
               </Button>
             </Box>

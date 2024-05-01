@@ -13,10 +13,13 @@ import { Dispatch } from "@reduxjs/toolkit";
 import { createSelector } from "reselect";
 import { setPausedOrders, setProcessOrders, setFinishedOrders } from "./slice";
 
+import { Order, OrderInquiry } from "../../../lib/types/orders";
+import { OrderStatus } from "../../../lib/enum/order.enum";
 import { Member } from "../../../lib/types/member";
 
 import "../../../css/order.css";
-import { Order } from "../../../lib/types/orders";
+import OrderService from "../../services/OrderService";
+import { error } from "console";
 
 /*//*                  REDUX SLICE & SLECTOR */
 
@@ -30,6 +33,30 @@ export default function OrderPage() {
   const { setPausedOrders, setProcessOrders, setFinishedOrders } =
     actionDispatch(useDispatch());
   const [value, setValue] = useState("1");
+  const [orderInquiry, setOrderInquiry] = useState<OrderInquiry>({
+    page: 1,
+    limit: 5,
+    orderStatus: OrderStatus.PAUSE,
+  });
+  useEffect(() => {
+    const order = new OrderService();
+
+    order
+      .getMyOrders({ ...orderInquiry, orderStatus: OrderStatus.PAUSE })
+      .then((data)=>setPausedOrders(data))
+      .catch((error) => console.log(error));
+
+    order
+      .getMyOrders({ ...orderInquiry, orderStatus: OrderStatus.PROCESS })
+      .then((data)=>setProcessOrders(data))
+      .catch((error) => console.log(error));
+    
+    order
+      .getMyOrders({ ...orderInquiry, orderStatus: OrderStatus.FINISH})
+      .then((data)=>setFinishedOrders(data))
+      .catch((error) => console.log(error));
+    
+  }, [orderInquiry]);
 
   /*//*                  HANDLERS   */
 
