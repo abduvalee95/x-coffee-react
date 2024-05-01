@@ -14,16 +14,20 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
       ? JSON.parse(localStorage.getItem("memberData") as string)
       : null
   );
+  const [orderBuilder, setOrderBuilder] = useState<Date>(new Date());
+
   console.log("===========Verify ++++++++========");
 
   return (
-    <GlobalContext.Provider value={{ authMember, setAuthMember }}>
+    <GlobalContext.Provider
+      value={{ authMember, setAuthMember, orderBuilder, setOrderBuilder }}
+    >
       {children}
     </GlobalContext.Provider>
   );
 };
 
-// asosan authenticationda iwlatishimi z mumkkin 
+// asosan authenticationda iwlatishimi z mumkkin
 
 // index.tsxda renderga wrap qilgandan keyn aplicationimizni ixtiyoriy joyidan chaqira olamiz "authMember, setAuthMember"
 

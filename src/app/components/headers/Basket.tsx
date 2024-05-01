@@ -23,8 +23,8 @@ interface BasketProps {
 
 export default function Basket(props: BasketProps) {
   const { cartItems, onAdd, onDelete, onDeleteAll, onRemove } = props;
-  const { authMember } = useGlobals();
-  const history = useHistory();
+  const { authMember,setOrderBuilder} = useGlobals();
+  const history = useHistory()
   const itemsPrice = cartItems.reduce(
     (a: number, c: CartItem) => a + c.quantity * c.price,
     0
@@ -53,7 +53,7 @@ export default function Basket(props: BasketProps) {
       await order.createOrder(cartItems)
       
       onDeleteAll();
-//? REFREsh Context
+      // setOrderBuilder(new Date()) //orderlar delete bolganda osha vcaqtida pageni yangilab olyabmiz
       history.push("/orders")
 
     } catch (error) {

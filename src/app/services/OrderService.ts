@@ -1,7 +1,7 @@
 import axios from "axios";
 import { serverApi } from "../../lib/config";
 import { CartItem } from "../../lib/types/search";
-import { Order, OrderInquiry, OrderItemInput } from "../../lib/types/orders";
+import { Order, OrderInquiry, OrderItemInput, OrderUpdateInput } from "../../lib/types/orders";
 
 class OrderService {
   private readonly path: string;
@@ -19,7 +19,7 @@ class OrderService {
           productId: cartItem._id,
         };
       });
-      const url = this.path + "/order/create";
+      const url = `${this.path}/order/create`;
       const result = await axios.post(url, orderItems, {
         withCredentials: true,
       });
@@ -34,17 +34,29 @@ class OrderService {
 
   public async getMyOrders(input: OrderInquiry): Promise<Order[]> {
     try {
-      axios.defaults.withCredentials= true
-      const url = `${this.path}/order/all`
-      const query = `?page=${input.page}&limit=${input.limit}&orderStatus=${input.orderStatus}`
+      axios.defaults.withCredentials = true;
+      const url = `${this.path}/order/all`;
+      const query = `?page=${input.page}&limit=${input.limit}&orderStatus=${input.orderStatus}`;
 
-      const result = await axios.get(url + query, {})
+      const result = await axios.get(url + query, {});
       console.log("getMyOrders:", result);
-      
-      return result.data
-      
+
+      return result.data;
     } catch (error) {
       console.log("Error, createOrder", error);
+      throw error;
+    }
+  }
+
+  public async updatedOrder(input: OrderUpdateInput): Promise<Order> {
+    try {
+      const url = `${this.path}/order/update`;
+      const result = await axios.post(url, input, { withCredentials: true }); //cookielar backendan frontendga chikarish provide
+      console.log("updateOrder:::", result);
+
+      return result.data;
+    } catch (error) {
+      console.log("Error, updateOrder", error);
       throw error;
     }
   }
