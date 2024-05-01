@@ -10,7 +10,9 @@ import FinishedOrders from "./FinishedOrders";
 //!    redux imports
 import { useDispatch } from "react-redux";
 import { Dispatch } from "@reduxjs/toolkit";
+
 import { setPausedOrders, setProcessOrders, setFinishedOrders } from "./slice";
+
 import { Order, OrderInquiry } from "../../../lib/types/orders";
 import { OrderStatus } from "../../../lib/enum/order.enum";
 import OrderService from "../../services/OrderService";
