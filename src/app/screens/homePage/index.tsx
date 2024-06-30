@@ -44,7 +44,7 @@ export default function HomePage() {
       .getProducts({
         page: 1,
         limit: 4,
-        order: "productViews",
+        order: "createdAt",
         productCollection: ProductCollection.DISH,
       })
       .then((data) => {

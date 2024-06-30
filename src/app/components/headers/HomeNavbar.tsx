@@ -10,11 +10,11 @@ import {
 } from "@mui/material";
 import { NavLink } from "react-router-dom";
 import Basket from "./Basket";
-import { log } from "console";
 import { CartItem } from "../../../lib/types/search";
 import { useGlobals } from "../../hooks/useGlobals";
 import { serverApi } from "../../../lib/config";
 import { Logout } from "@mui/icons-material";
+import Topline from "./Topline"
 
 interface HomeNavbarProps {
   cartItems: CartItem[];
@@ -49,11 +49,17 @@ export default function HomeNavbar(props: HomeNavbarProps) {
 
   return (
     <div className="home-navbar">
+    
       <Container className="navbar-container">
+         <Box sx={{ mb: 2}} >
+            <Topline/>
+
+        </Box> 
         <Stack className="menu">
+          
           <Box>
             <NavLink to="/">
-              <img className="brand-logo" src="/icons/burak.svg" />
+             <img className="brand-logo" src="/video/download.gif" /> 
             </NavLink>
           </Box>
 
@@ -68,7 +74,7 @@ export default function HomeNavbar(props: HomeNavbarProps) {
 
             <Box className={"hover-line"}>
               <NavLink to="/products" activeClassName={"underline"}>
-                Products
+                Menu
               </NavLink>
             </Box>
 
@@ -90,16 +96,16 @@ export default function HomeNavbar(props: HomeNavbarProps) {
 
             <Box className={"hover-line"}>
               <NavLink to="/help" activeClassName={"underline"}>
-                Help
+                About
               </NavLink>
             </Box>
-            <Basket
+{/*             <Basket
               cartItems={cartItems}
               onAdd={onAdd}
               onRemove={onRemove}
               onDelete={onDelete}
               onDeleteAll={onDeleteAll}
-            />
+            /> */}
             {!authMember ? (
               <Box>
                 <Button
@@ -170,10 +176,9 @@ export default function HomeNavbar(props: HomeNavbarProps) {
         <Stack className={"header-frame"}>
           <Stack className={"detail"}>
             <Box className={"head-main-txt"}>
-              World's Most Delicious Cousine
+              Great Coffee, Good Vibes
             </Box>
-            <Box className={"wel-txt"}>The Choice, not just a choice</Box>
-            <Box className={"service-txt"}> 24 hours service</Box>
+            <Box className={"wel-txt"}> Welcome To The  X-COFFEE </Box>
             <Box className={"signup"}>
               {!authMember ? (
                 <Button
