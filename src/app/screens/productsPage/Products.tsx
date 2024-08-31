@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
-import { Box, Container, Stack, Button } from "@mui/material";
+import { Box, Container, Stack, Button, Typography } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
@@ -21,6 +21,7 @@ import { serverApi } from "../../../lib/config";
 import { log } from "console";
 import { useHistory } from "react-router-dom";
 import { CartItem } from "../../../lib/types/search";
+
 
 /*//*                  REDUX SLICE & SLECTOR */
 
@@ -91,7 +92,7 @@ export default function Products(props: ProductProps) {
       <Container>
         <Stack flexDirection={"column"} alignItems={"center"}>
           <Stack className={"avatar-big-box"}>
-            <Box className="title"> Burak Restaurant </Box>
+            <Box className="title"> X-Coffee Menu </Box>
             <Stack className={"single-search-big-box"}>
               <input
                 type={"search"}
@@ -196,7 +197,7 @@ export default function Products(props: ProductProps) {
                 >
                   Drink
                 </Button>
-                <Button
+{/*                 <Button
                   variant={"contained"}
                   color={
                     productSearch.productCollection === ProductCollection.SALAD
@@ -208,7 +209,7 @@ export default function Products(props: ProductProps) {
                   }
                 >
                   Salad
-                </Button>
+                </Button> */}
                 <Button
                   variant={"contained"}
                   color={
@@ -220,7 +221,7 @@ export default function Products(props: ProductProps) {
                     searchCollectionHandler(ProductCollection.DISH)
                   }
                 >
-                  Dish
+                  IceTea
                 </Button>
               </div>
             </Stack>
@@ -321,22 +322,35 @@ export default function Products(props: ProductProps) {
           </Stack>
         </Stack>
       </Container>
-
+      {/* <Container>
+        <Stack>
+          <Stack>
+            <Box>
+              <img src="" alt="" />
+            </Box>
+            <Box>
+              <Typography></Typography>
+              <Typography></Typography>
+              <Typography></Typography>
+            </Box>
+         </Stack>
+        </Stack>
+              </Container> */}
       <div className={"brands-logo"}>
         <Container className="family-brands">
-          <Box className="title"> Our Family Brands </Box>
+          <Box className="title"> All Your Coffe-Shop Needs </Box>
           <Stack className={"family-card"}>
             <Box className="card-box">
-              <img src="/img/gurme.webp" alt="img" />
+              <img src="/img/topicalmango.png" alt="img" />
             </Box>
             <Box className="card-box">
-              <img src="/img/seafood.webp" alt="img" />
+              <img src="/img/velvet-ice.png" alt="img" />
             </Box>
             <Box className="card-box">
-              <img src="/img/sweets.webp" alt="img" />
+              <img src="/img/produ.png" alt="img" />
             </Box>
             <Box className="card-box">
-              <img src="/img/doner.webp" alt="img" />
+              <img src="/img/iced-mocha.png" alt="img" />
             </Box>
           </Stack>
         </Container>

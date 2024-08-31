@@ -77,8 +77,8 @@ export default function HomePage() {
     <div className={"homepage"}>
       <Statistics />
       <PopularDishes />
-      <NewDishes />
       <Advertisement />
+      <NewDishes />
       <ActiveUsers />
       <Events />
     </div>

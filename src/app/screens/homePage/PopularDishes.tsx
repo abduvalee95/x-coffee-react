@@ -9,8 +9,8 @@ import Typography from "@mui/joy/Typography";
 import CardOverflow from "@mui/joy/CardOverflow";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/swiper-bundle.min.css';
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/swiper-bundle.min.css";
 //!    redux imports
 import { useSelector } from "react-redux";
 import { createSelector } from "@reduxjs/toolkit";
@@ -117,48 +117,46 @@ export default function PopularDishes() {
   const { popularDishes } = useSelector(popularDishesRetrieve);
   const { newDishes } = useSelector(newDishesRetrieve);
 
-    return (
-      <section className="section  kf-grid-carousel">
-        <div className="container"> 
-          <Swiper
-            spaceBetween={30}
-            slidesPerView={3}
-            watchSlidesProgress
-            autoplay={{ delay: 3000 }}
-            loop 
-            lazy
-            // pagination={{ clickable: true }}
-            className="swiper-container"
-          >
-              {newDishes.length !== 0 ? (
-              newDishes.map((product) => {
-                const imagePath = `${serverApi}/${product.productImages[0]}`;
-                const productSizeVolume =
-                  product.productCollection === ProductCollection.DRINK
-                    ? product.productVolume + " L"
-                    : product.productSize + "  Size";
-                return (
-                  <SwiperSlide key={product._id} className="swiper-slide">
-                    <div className="slide-item element-anim-1 scroll-animate animate__active">
-                      <div className="image kf-image-hover">
-                        <a href={imagePath} className="has-popup-image">
-                          <img src={imagePath} alt='img' />
-                        </a>
-                      </div>
-                      <div className="desc">
-                        <h5 className="name">{product.productName}</h5>
-                      </div>
+  return (
+    <section className="kf-grid-carousel">
+      <div className="container">
+        <Swiper
+          spaceBetween={30}
+          slidesPerView={3}
+          watchSlidesProgress
+          autoplay={{ delay: 3000 }}
+          loop
+          lazy
+          // pagination={{ clickable: true }}
+          className="swiper-container"
+        >
+          {newDishes.length !== 0 ? (
+            newDishes.map((product) => {
+              const imagePath = `${serverApi}/${product.productImages[0]}`;
+              const productSizeVolume =
+                product.productCollection === ProductCollection.DRINK
+                  ? product.productVolume + " L"
+                  : product.productSize + "  Size";
+              return (
+                <SwiperSlide key={product._id} className="swiper-slide">
+                  <div className="slide-item element-anim-1 scroll-animate animate__active">
+                    <div className="image kf-image-hover">
+                      <a href={imagePath} className="has-popup-image">
+                        <img src={imagePath} alt="img" />
+                      </a>
                     </div>
-                  </SwiperSlide>
-                )
-              })
-          ):(
+                    <div className="desc">
+                      <h5 className="name">{product.productName}</h5>
+                    </div>
+                  </div>
+                </SwiperSlide>
+              );
+            })
+          ) : (
             <Box className="no-data">New products are not added yet </Box>
           )}
-          </Swiper>
-        </div>
-      </section>
-    );
-  };
-  
-  
+        </Swiper>
+      </div>
+    </section>
+  );
+}
